@@ -17,6 +17,7 @@ In search.py, you will implement generic search algorithms which are called by
 Pacman agents (in searchAgents.py).
 """
 
+from numpy import empty, str0
 import util
 
 class SearchProblem:
@@ -82,15 +83,67 @@ def depthFirstSearch(problem: SearchProblem):
     To get started, you might want to try some of these simple commands to
     understand the search problem that is being passed in:
     """
-    print("Start:", problem.getStartState())
-    print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
+   
+
+    originalNode=problem.getStartState()
+    if problem.isGoalState(originalNode):
+        return []
+
+    my_queue= util.Queue()
+    visited=[]
+    my_queue.push((originalNode, []))
+
+    while not my_queue.isEmpty():
+        currentNode, actions=my_queue.pop()
+        if currentNode not in visited:
+            visited.append(currentNode)
+
+            if problem.isGoalState(currentNode):
+                return actions
+
+            for laterNode, action, cost in problem.getSuccessors(currentNode):
+                newAction= actions + [action]
+                my_queue.push ((laterNode,newAction))
+
+    
+
+
+    #goal_found=False
+
+    #while not goal_found:
+    #    node=frontier.next()
+    #    frontier.del(node)
+
+    #    print("Start:", problem.getStartState())
+        print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     "*** YOUR CODE HERE ***"
     util.raiseNotDefined()
 
 def breadthFirstSearch(problem: SearchProblem):
-    """Search the shallowest nodes in the search tree first."""
-    "*** YOUR CODE HERE ***"
+   #     """Search the shallowest nodes in the search tree first."""
+   # "*** YOUR CODE HERE ***"
+
+    originalNode=problem.getStartState()
+    if problem.isGoalState(originalNode):
+       return[]
+
+    my_queue=util.Queue()
+    visited=[]
+    my_queue.push((originalNode, []))
+
+    while not my_queue.isEmpty():
+        currentNode, actions=my_queue.pop()
+        if currentNode not in visited:
+            visited.append(currentNode)
+
+            if problem.isGoalState(currentNode):
+                return actions
+
+            for laterNode, action, cost in problem.getSuccessors(currentNode):
+                newAction= actions + [action]
+                my_queue.push ((laterNode,newAction))
+
     util.raiseNotDefined()
 
 def uniformCostSearch(problem: SearchProblem):

@@ -670,3 +670,7 @@ def unmutePrint():
     sys.stdout = _ORIGINAL_STDOUT
     #sys.stderr = _ORIGINAL_STDERR
 
+def pop(self):
+    "Move the most recently added item to the stack"
+    return self.list.pop
+
